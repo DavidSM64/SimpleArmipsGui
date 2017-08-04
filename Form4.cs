@@ -22,6 +22,7 @@ namespace armipsSimpleGui
             libs.AutoResizeColumns(ColumnHeaderAutoResizeStyle.ColumnContent);
             libs.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             fileRamBox.Text = Settings.fileRAM.ToString("X");
+            useASMasRootDir.Checked = Settings.useASMasROOT;
 
             Settings.loadPrePostASM();
 
@@ -80,6 +81,7 @@ namespace armipsSimpleGui
             uint.TryParse(fileRamBox.Text,
                     System.Globalization.NumberStyles.HexNumber,
                     null, out Settings.fileRAM);
+            Settings.useASMasROOT = useASMasRootDir.Checked;
             Settings.uselibs.Clear();
             foreach (ListViewItem item in libs.Items) {
                 if(item.Checked)
@@ -161,6 +163,16 @@ namespace armipsSimpleGui
                 upBut.Enabled = false;
                 downBut.Enabled = false;
             }
+        }
+
+        private void label1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label2_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

@@ -64,9 +64,9 @@ namespace armipsSimpleGui
                 return;
             }
 
-            if (!File.Exists(Directory.GetCurrentDirectory() + "/data/chksum64.exe"))
+            if (!File.Exists(Directory.GetCurrentDirectory() + "/data/n64crc.exe"))
             {
-                MessageBox.Show("Could not find chksum64.exe! Aborting operation!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Could not find n64crc.exe! Aborting operation!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -95,10 +95,15 @@ namespace armipsSimpleGui
                         File.WriteAllText("temp.asm", createText);
 
                         Process p = new Process();
-                        p.StartInfo.FileName = Directory.GetCurrentDirectory()+"\\data\\armips.exe";
-                        p.StartInfo.Arguments = Directory.GetCurrentDirectory()+"\\temp.asm ";
-                        p.StartInfo.Arguments += additionalParamters;
-
+                        p.StartInfo.FileName = "\"" + Directory.GetCurrentDirectory()+"\\data\\armips.exe\"";
+                        if (Settings.useASMasROOT)
+                        {
+                            p.StartInfo.Arguments +=
+                                "-root \"" + asmTextBox.Text.Substring(0, asmTextBox.Text.LastIndexOf("\\") + 1).Replace("\\","/") + "\" ";
+                        }
+                        p.StartInfo.Arguments += "\"" + Directory.GetCurrentDirectory() + "\\temp.asm\"";
+                        p.StartInfo.Arguments += additionalParamters + " ";
+                        Console.WriteLine(p.StartInfo.Arguments);
                         p.StartInfo.RedirectStandardOutput = true;
                         p.StartInfo.UseShellExecute = false;
                         p.Start();
@@ -117,7 +122,7 @@ namespace armipsSimpleGui
                         else
                         {
                             Process checksum = new Process();
-                            checksum.StartInfo.FileName = Directory.GetCurrentDirectory() + "/data/chksum64.exe";
+                            checksum.StartInfo.FileName = Directory.GetCurrentDirectory() + "/data/n64crc.exe";
                             checksum.StartInfo.Arguments = "\"" + romTextBox.Text + "\"";
                             checksum.Start();
                             checksum.WaitForExit();
@@ -159,6 +164,7 @@ namespace armipsSimpleGui
             {
                 List<String> list = new List<String>();
                 list.Add("<fileRAM>00000000</fileRAM>");
+                list.Add("<asmDirIsRoot>True</asmDirIsRoot>");
                 list.Add("<lib>sm64mlib</lib>");
                 Settings.WriteFileDirectly(Settings.PATH, list);
             }

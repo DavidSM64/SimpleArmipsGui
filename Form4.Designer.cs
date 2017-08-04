@@ -40,17 +40,19 @@
             this.button4 = new System.Windows.Forms.Button();
             this.downBut = new System.Windows.Forms.Button();
             this.upBut = new System.Windows.Forms.Button();
+            this.useASMasRootDir = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 38);
+            this.label1.Location = new System.Drawing.Point(4, 53);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Library includes";
+            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // libs
             // 
@@ -61,7 +63,7 @@
             this.libs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.libs.HideSelection = false;
             this.libs.LabelWrap = false;
-            this.libs.Location = new System.Drawing.Point(7, 54);
+            this.libs.Location = new System.Drawing.Point(7, 69);
             this.libs.MultiSelect = false;
             this.libs.Name = "libs";
             this.libs.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -86,6 +88,7 @@
             this.label2.Size = new System.Drawing.Size(107, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "File RAM address: 0x";
+            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // fileRamBox
             // 
@@ -111,7 +114,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(380, 160);
+            this.button2.Location = new System.Drawing.Point(380, 175);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -121,7 +124,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(300, 160);
+            this.button3.Location = new System.Drawing.Point(300, 175);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 7;
@@ -142,7 +145,7 @@
             // downBut
             // 
             this.downBut.Enabled = false;
-            this.downBut.Location = new System.Drawing.Point(88, 160);
+            this.downBut.Location = new System.Drawing.Point(88, 175);
             this.downBut.Name = "downBut";
             this.downBut.Size = new System.Drawing.Size(75, 23);
             this.downBut.TabIndex = 9;
@@ -153,7 +156,7 @@
             // upBut
             // 
             this.upBut.Enabled = false;
-            this.upBut.Location = new System.Drawing.Point(7, 160);
+            this.upBut.Location = new System.Drawing.Point(7, 175);
             this.upBut.Name = "upBut";
             this.upBut.Size = new System.Drawing.Size(75, 23);
             this.upBut.TabIndex = 10;
@@ -161,11 +164,24 @@
             this.upBut.UseVisualStyleBackColor = true;
             this.upBut.Click += new System.EventHandler(this.upBut_Click);
             // 
+            // useASMasRootDir
+            // 
+            this.useASMasRootDir.AutoSize = true;
+            this.useASMasRootDir.Checked = true;
+            this.useASMasRootDir.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.useASMasRootDir.Location = new System.Drawing.Point(7, 32);
+            this.useASMasRootDir.Name = "useASMasRootDir";
+            this.useASMasRootDir.Size = new System.Drawing.Size(194, 17);
+            this.useASMasRootDir.TabIndex = 11;
+            this.useASMasRootDir.Text = "Use ASM file folder as root directory";
+            this.useASMasRootDir.UseVisualStyleBackColor = true;
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 189);
+            this.ClientSize = new System.Drawing.Size(464, 205);
+            this.Controls.Add(this.useASMasRootDir);
             this.Controls.Add(this.upBut);
             this.Controls.Add(this.downBut);
             this.Controls.Add(this.button4);
@@ -201,5 +217,6 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button downBut;
         private System.Windows.Forms.Button upBut;
+        private System.Windows.Forms.CheckBox useASMasRootDir;
     }
 }

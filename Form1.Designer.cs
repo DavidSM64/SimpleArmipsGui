@@ -167,7 +167,7 @@
             this.MaximizeBox = false;
             this.Name = "main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Simple Armips GUI";
+            this.Text = "Simple Armips GUI v1.0.2";
             this.Load += new System.EventHandler(this.main_Load);
             this.ResumeLayout(false);
             this.PerformLayout();

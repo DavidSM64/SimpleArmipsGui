@@ -15,6 +15,7 @@ namespace armipsSimpleGui
         public static List<String> uselibs = new List<String>();
         public static string preASM = "";
         public static string postASM = "";
+        public static bool useASMasROOT = true;
 
         public static void saveString(string text, string path) {
             File.WriteAllText(path, text);
@@ -52,6 +53,10 @@ namespace armipsSimpleGui
                         System.Globalization.NumberStyles.HexNumber, 
                         null, out fileRAM);
                 }
+                else if (child.Name.Equals("asmDirIsRoot"))
+                {
+                    bool.TryParse(child.InnerText, out useASMasROOT);
+                }
             }
 
         }
@@ -60,6 +65,7 @@ namespace armipsSimpleGui
         {
             List<String> list = new List<String>();
             list.Add("<fileRAM>" + fileRAM.ToString("X") + "</fileRAM>");
+            list.Add("<asmDirIsRoot>" + useASMasROOT.ToString() + "</asmDirIsRoot>");
 
             foreach (String s in uselibs)
             {
