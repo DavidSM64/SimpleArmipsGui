@@ -41,18 +41,19 @@
             this.downBut = new System.Windows.Forms.Button();
             this.upBut = new System.Windows.Forms.Button();
             this.useASMasRootDir = new System.Windows.Forms.CheckBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.button6 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(4, 53);
+            this.label1.Location = new System.Drawing.Point(4, 58);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(96, 13);
             this.label1.TabIndex = 2;
             this.label1.Text = "Library includes";
-            this.label1.Click += new System.EventHandler(this.label1_Click);
             // 
             // libs
             // 
@@ -63,7 +64,7 @@
             this.libs.HeaderStyle = System.Windows.Forms.ColumnHeaderStyle.None;
             this.libs.HideSelection = false;
             this.libs.LabelWrap = false;
-            this.libs.Location = new System.Drawing.Point(7, 69);
+            this.libs.Location = new System.Drawing.Point(7, 74);
             this.libs.MultiSelect = false;
             this.libs.Name = "libs";
             this.libs.RightToLeft = System.Windows.Forms.RightToLeft.No;
@@ -83,16 +84,15 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(4, 12);
+            this.label2.Location = new System.Drawing.Point(5, 39);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(107, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "File RAM address: 0x";
-            this.label2.Click += new System.EventHandler(this.label2_Click);
             // 
             // fileRamBox
             // 
-            this.fileRamBox.Location = new System.Drawing.Point(108, 9);
+            this.fileRamBox.Location = new System.Drawing.Point(109, 36);
             this.fileRamBox.MaxLength = 8;
             this.fileRamBox.Name = "fileRamBox";
             this.fileRamBox.Size = new System.Drawing.Size(67, 20);
@@ -104,7 +104,7 @@
             // 
             // button1
             // 
-            this.button1.Location = new System.Drawing.Point(275, 7);
+            this.button1.Location = new System.Drawing.Point(6, 5);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(87, 23);
             this.button1.TabIndex = 5;
@@ -114,7 +114,7 @@
             // 
             // button2
             // 
-            this.button2.Location = new System.Drawing.Point(380, 175);
+            this.button2.Location = new System.Drawing.Point(380, 180);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(75, 23);
             this.button2.TabIndex = 6;
@@ -124,7 +124,7 @@
             // 
             // button3
             // 
-            this.button3.Location = new System.Drawing.Point(300, 175);
+            this.button3.Location = new System.Drawing.Point(300, 180);
             this.button3.Name = "button3";
             this.button3.Size = new System.Drawing.Size(75, 23);
             this.button3.TabIndex = 7;
@@ -134,7 +134,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(368, 7);
+            this.button4.Location = new System.Drawing.Point(98, 5);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(87, 23);
             this.button4.TabIndex = 8;
@@ -145,7 +145,7 @@
             // downBut
             // 
             this.downBut.Enabled = false;
-            this.downBut.Location = new System.Drawing.Point(88, 175);
+            this.downBut.Location = new System.Drawing.Point(88, 180);
             this.downBut.Name = "downBut";
             this.downBut.Size = new System.Drawing.Size(75, 23);
             this.downBut.TabIndex = 9;
@@ -156,7 +156,7 @@
             // upBut
             // 
             this.upBut.Enabled = false;
-            this.upBut.Location = new System.Drawing.Point(7, 175);
+            this.upBut.Location = new System.Drawing.Point(7, 180);
             this.upBut.Name = "upBut";
             this.upBut.Size = new System.Drawing.Size(75, 23);
             this.upBut.TabIndex = 10;
@@ -169,18 +169,40 @@
             this.useASMasRootDir.AutoSize = true;
             this.useASMasRootDir.Checked = true;
             this.useASMasRootDir.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.useASMasRootDir.Location = new System.Drawing.Point(7, 32);
+            this.useASMasRootDir.Location = new System.Drawing.Point(258, 38);
             this.useASMasRootDir.Name = "useASMasRootDir";
             this.useASMasRootDir.Size = new System.Drawing.Size(194, 17);
             this.useASMasRootDir.TabIndex = 11;
             this.useASMasRootDir.Text = "Use ASM file folder as root directory";
             this.useASMasRootDir.UseVisualStyleBackColor = true;
             // 
+            // button5
+            // 
+            this.button5.Location = new System.Drawing.Point(249, 5);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(104, 23);
+            this.button5.TabIndex = 12;
+            this.button5.Text = "Update armips.exe";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // button6
+            // 
+            this.button6.Location = new System.Drawing.Point(359, 5);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(101, 23);
+            this.button6.TabIndex = 13;
+            this.button6.Text = "Armips Readme";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(464, 205);
+            this.ClientSize = new System.Drawing.Size(464, 208);
+            this.Controls.Add(this.button6);
+            this.Controls.Add(this.button5);
             this.Controls.Add(this.useASMasRootDir);
             this.Controls.Add(this.upBut);
             this.Controls.Add(this.downBut);
@@ -218,5 +240,7 @@
         private System.Windows.Forms.Button downBut;
         private System.Windows.Forms.Button upBut;
         private System.Windows.Forms.CheckBox useASMasRootDir;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Button button6;
     }
 }

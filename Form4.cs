@@ -165,14 +165,19 @@ namespace armipsSimpleGui
             }
         }
 
-        private void label1_Click(object sender, EventArgs e)
+        private void button5_Click(object sender, EventArgs e)
         {
-
+            // Update Armips
+            ArmipsUpdater.Run(false);
         }
 
-        private void label2_Click(object sender, EventArgs e)
+        private void button6_Click(object sender, EventArgs e)
         {
 
+            DialogResult dlgResult = MessageBox.Show("The webpage 'https://github.com/Kingcom/armips/blob/master/Readme.md' will now open up on your default browser.", "Armips readme", MessageBoxButtons.OKCancel);
+            if (dlgResult == DialogResult.OK)
+                System.Diagnostics.Process.Start("https://github.com/Kingcom/armips/blob/master/Readme.md");
+            
         }
     }
 }
