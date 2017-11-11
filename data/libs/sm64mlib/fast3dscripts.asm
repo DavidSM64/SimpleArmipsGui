@@ -19,14 +19,38 @@
 .defineLabel F3D_TEXSIZE_16b,	0x02
 .defineLabel F3D_TEXSIZE_32b,	0x03
 
+/*
+Vertex Structure (from cpuHacka101's notes)
+
+xxxxyyyyzzzz0000uuuuvvvvrrggbbaa
+-xxxx: X Position of vertex
+-yyyy: Y Position of vertex
+-zzzz: Z Position of vertex
+-uuuu: X texture stretch along vertex
+-vvvv: Y texture stretch along vertex
+-rr: Red channel of vertex, used for vertex colors and/or normals
+-gg: Green channel of vertex, used for vertex colors and/or normals
+-bb: Blue channel of vertex, used for vertex colors and/or normals
+-aa: Alpha channel of vertex, used in vertex colors, ignored in vertex normals
+*/
+.macro .f3d_vertex, x, y, z, u, v, nx_r, ny_g, nz_b, alpha
+	.halfword x, y, z, 0x0000, u, v
+	.byte nx_r, ny_g, nz_b, alpha
+.endmacro
+
 // Generic Fast3D macro
 .macro .f3d, upperWord, lowerWord
 	.word upperWord, lowerWord
 .endmacro
 
+// Generic Fast3D macro
+.macro .f3d_dw, value
+	.doubleword value
+.endmacro
+
 // ******** Cmd 00: No Operation ******** //
 .macro .f3d_00
-	.f3d 0x00000000, 0x00000000
+	.f3d_dw 0x0000000000000000
 .endmacro
 .macro .f3d_nop
 	.f3d_00
@@ -93,18 +117,19 @@
 
 // ******** Cmd B8: F3D_ENDDL ******** //
 .macro .f3d_b8
-	.f3d 0xB8000000, 0x00000000
+	.f3d_dw 0xB800000000000000
 .endmacro
 .macro .f3d_enddl
 	.f3d_b8
 .endmacro
 
 // ******** Cmd BB: G_TEXTURE ******** //
-.macro .f3d_bb, enable, scaleS, scaleT, level, tile 
-	.byte 0xBB, 0x00, (((level & 0x7) << 3) | (tile & 0x7))
+.macro .f3d_bb, enable, scaleS_f, scaleT_f, level, tile 
+	.byte 0xBB, 0x00, (((level & 0x7) << 3) | (tile & 0x7)), enable
+	.halfword int(float(scaleS_f) * 0xFFFF), int(float(scaleT_f) * 0xFFFF)
 .endmacro
-.macro .f3d_texture, enable, scaleS, scaleT, level, tile 
-	.f3d_bb enable, scaleS, scaleT, level, tile 
+.macro .f3d_texture, enable, scaleS_f, scaleT_f, level, tile 
+	.f3d_bb enable, scaleS_f, scaleT_f, level, tile 
 .endmacro
 
 // ******** Cmd BF: G_TRI1 ******** //
@@ -119,7 +144,7 @@
 
 // ******** Cmd E6: G_RDPLOADSYNC ******** //
 .macro .f3d_e6
-	.f3d 0xE6000000, 0x00000000
+	.f3d_dw 0xE600000000000000
 .endmacro
 .macro .f3d_rdpLoadSync
 	.f3d_e6
@@ -127,7 +152,7 @@
 
 // ******** Cmd E7: G_RDPPIPESYNC ******** //
 .macro .f3d_e7
-	.f3d 0xE7000000, 0x00000000
+	.f3d_dw 0xE700000000000000
 .endmacro
 .macro .f3d_rdpPipeSync
 	.f3d_e7
@@ -135,7 +160,7 @@
 
 // ******** Cmd E8: G_RDPTILESYNC ******** //
 .macro .f3d_e8
-	.f3d 0xE8000000, 0x00000000
+	.f3d_dw 0xE800000000000000
 .endmacro
 .macro .f3d_rdpTileSync
 	.f3d_e8
@@ -143,10 +168,21 @@
 
 // ******** Cmd E8: G_RDPFULLSYNC ******** //
 .macro .f3d_e9
-	.f3d 0xE9000000, 0x00000000
+	.f3d_dw 0xE900000000000000
 .endmacro
 .macro .f3d_rdpFullSync
 	.f3d_e9
+.endmacro
+
+// ******** Cmd F0: G_LOADTLUT ******** //
+.macro .f3d_f0, tile, num_colors
+	.word 0xF0000000
+	.byte tile
+	.halfword (((num_colors-1) & 0x3FF) << 6)
+	.byte 0x00
+.endmacro
+.macro .f3d_loadTLUT, tile, num_colors
+	.f3d_f0 tile, num_colors
 .endmacro
 
 // ******** Cmd F2: G_SETTILESIZE ******** //
@@ -161,7 +197,7 @@
 // ******** Cmd F3: G_LOADBLOCK ******** //
 .macro .f3d_f3, tile, uls, ult, texels, dxt
 	.byte 0xF3, (uls >> 4) & 0xFF, (uls & 0xF) | (ult >> 8), ult & 0xFF
-	.byte tile, (texels >> 4) & 0xFF, (texels & 0xF) | (dxt >> 8), dxt & 0xFF
+	.byte tile, ((texels - 1) >> 4) & 0xFF, (((texels - 1) & 0xF) << 4) | (dxt >> 8), dxt & 0xFF
 .endmacro
 .macro .f3d_loadBlock, tile, uls, ult, texels, dxt
 	.f3d_f3 tile, uls, ult, texels, dxt
@@ -233,25 +269,25 @@
 .endmacro
 
 .macro .f3d_setCombine_Tex_Solid_NoFog
-	.f3d 0xFC127E24, 0xFFFFF9FC
+	.f3d_dw 0xFC127E24FFFFF9FC
 .endmacro
 .macro .f3d_setCombine_Tex_Alpha_NoFog
-	.f3d 0xFC121824, 0xFF33FFFF
+	.f3d_dw 0xFC121824FF33FFFF
 .endmacro
 .macro .f3d_setCombine_Tex_Solid_Fog
-	.f3d 0xFC127FFF, 0xFFFFF838
+	.f3d_dw 0xFC127FFFFFFFF838
 .endmacro
 .macro .f3d_setCombine_Tex_Alpha_Fog
-	.f3d 0xFCFFFFFF, 0xFFFCF238
+	.f3d_dw 0xFCFFFFFFFFFCF238
 .endmacro
 .macro .f3d_setCombine_Tex_Trans
-	.f3d 0xFC122E24, 0xFFFFFBFD
+	.f3d_dw 0xFC122E24FFFFFBFD
 .endmacro
 .macro .f3d_setCombine_Color_Solid
-	.f3d 0xFCFFFFFF, 0xFFFE7B3D
+	.f3d_dw 0xFCFFFFFFFFFE7B3D
 .endmacro
 .macro .f3d_setCombine_Color_Trans
-	.f3d 0xFCFFFFFF, 0xFFFEFBFD
+	.f3d_dw 0xFCFFFFFFFFFEFBFD
 .endmacro
 
 // ******** Cmd FD: G_SETTIMG ******** //

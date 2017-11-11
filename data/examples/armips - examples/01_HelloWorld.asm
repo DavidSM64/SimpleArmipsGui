@@ -18,5 +18,4 @@ addiu sp, sp, 0x18
 .endarea
 
 .orga 0x86250 ; 0x802CB250
-.ascii "Hello World"
-.byte 0x00 ; add null terminator
+.asciiz "Hello World"

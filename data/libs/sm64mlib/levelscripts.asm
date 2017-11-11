@@ -4,7 +4,7 @@
 	.word romStart, romEnd, segJump
 .endmacro
 .macro .ls_loadAndJump, seg, romStart, romEnd, segJump
-	.ls_00, seg, romStart, romEnd, segJump
+	.ls_00 seg, romStart, romEnd, segJump
 .endmacro
 
 // ******** Cmd 01: Load and Jump ******** //
@@ -13,7 +13,7 @@
 	.word romStart, romEnd, segJump
 .endmacro
 .macro .ls_loadAndJump2, seg, romStart, romEnd, segJump
-	.ls_01, seg, romStart, romEnd, segJump
+	.ls_01 seg, romStart, romEnd, segJump
 .endmacro
 
 // ******** Cmd 02: End levelscript ******** //
@@ -29,7 +29,7 @@
 	.halfword 0x0304, numFrames
 .endmacro
 .macro .ls_delayFrames, numFrames
-	.ls_03, numFrames
+	.ls_03 numFrames
 .endmacro
 
 // ******** Cmd 04: Delay Frames ******** //
@@ -37,7 +37,7 @@
 	.halfword 0x0404, numFrames
 .endmacro
 .macro .ls_delayFrames2, numFrames
-	.ls_04, numFrames
+	.ls_04 numFrames
 .endmacro
 
 // ******** Cmd 05: Jump to address ******** //
@@ -45,7 +45,7 @@
 	.word 0x05080000, jumpAddress
 .endmacro
 .macro .ls_jumpToAddress, jumpAddress
-	.ls_05, jumpAddress
+	.ls_05 jumpAddress
 .endmacro
 
 // ******** Cmd 06: Push stack ******** //
@@ -53,7 +53,7 @@
 	.word 0x06080000, pushAddress
 .endmacro
 .macro .ls_pushStack, pushAddress
-	.ls_06, pushAddress
+	.ls_06 pushAddress
 .endmacro
 
 // ******** Cmd 07: Pop stack ******** //
@@ -69,7 +69,7 @@
 	.halfword 0x0804, stack16
 .endmacro
 .macro .ls_pushStack16, stack16
-	.ls_08, stack16 
+	.ls_08 stack16 
 .endmacro
 
 // ******** Cmd 09: Pop Stack + 16 ******** //
@@ -103,7 +103,7 @@
 	.word arg, jumpAddress
 .endmacro
 .macro .ls_condJump, op, arg, jumpAddress
-	.ls_0c, op, arg, jumpAddress
+	.ls_0c op, arg, jumpAddress
 .endmacro
 
 // ******** Cmd 0D: Conditional Push ******** //
@@ -112,7 +112,7 @@
 	.word arg
 .endmacro
 .macro .ls_condPush, op, arg
-	.ls_0d, op, arg
+	.ls_0d op, arg
 .endmacro
 
 // ******** Cmd 0E: Conditional Skip ******** //
@@ -121,7 +121,7 @@
 	.word arg
 .endmacro
 .macro .ls_condSkip, op, arg
-	.ls_0e, op, arg
+	.ls_0e op, arg
 .endmacro
 
 // ******** Cmd 0F: Skip Next ******** //
@@ -155,7 +155,7 @@
 	.word func
 .endmacro
 .macro .ls_callFuncLoop, a0, func
-	.ls_11 a0, func
+	.ls_12 a0, func
 .endmacro
 
 // ******** Cmd 13: Set Accumulator ******** //
@@ -243,7 +243,7 @@
 	.word 0x1D040000
 .endmacro
 .macro .ls_endLoad
-	.ls_1b
+	.ls_1d
 .endmacro
 
 // ******** Cmd 1E:  ??? ******** //
@@ -256,7 +256,7 @@
 	.byte 0x1F, 0x08, area, 0x00
 	.word segAddr
 .endmacro
-.macro .ls_startArea
+.macro .ls_startArea, area, segAddr
 	.ls_1f area, segAddr
 .endmacro
 
@@ -279,7 +279,7 @@
 
 // ******** Cmd 22: Load Polygon With Geo Layout ******** //
 .macro .ls_22, id, segAddr
-	.byte 0x22, 0x00, 0x00, id
+	.byte 0x22, 0x08, 0x00, id
 	.word segAddr
 .endmacro
 .macro .ls_loadModel, id, segAddr

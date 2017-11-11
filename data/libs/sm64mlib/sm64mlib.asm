@@ -1,5 +1,5 @@
 .defineLabel SM64MLIB_VERSION_MAJOR, 0
-.defineLabel SM64MLIB_VERSION_MINOR, 1
+.defineLabel SM64MLIB_VERSION_MINOR, 2
 
 // Pointers/Structures
 .defineLabel SM64_CURR_OBJ_PTR, 	0x80361160
@@ -78,7 +78,6 @@
 	.string str
 .endmacro
 
-// This will only be useful with future versions of the library
 .macro .sm64mlib_requireVersion, major, minor
 	.if SM64MLIB_VERSION_MAJOR < major
 		.error "ERROR: You are using an out of data version of sm64mlib!"
@@ -98,4 +97,5 @@
 	.include "fast3dscripts.asm"
 	.include "behscripts.asm"
 	.include "sm64functions.asm"
+	.include "colors.asm"
 .relativeinclude off

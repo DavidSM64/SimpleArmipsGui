@@ -82,10 +82,10 @@
 	.endif
 .endmacro
 .macro .gs_setCameraFrustum, near, far
-	.gs_08 TRUE, 0x2D, near, far, 0x8029AA3C
+	.gs_0a TRUE, 0x2D, near, far, 0x8029AA3C
 .endmacro
 .macro .gs_setCameraFrustumAdv, useASM, fov, near, far, asmAddr
-	.gs_08 useASM, fov, near, far, asmAddr
+	.gs_0a useASM, fov, near, far, asmAddr
 .endmacro
 
 // ******** Cmd 0B: Start Geometry Layout ******** //
