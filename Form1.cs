@@ -8,8 +8,8 @@ namespace armipsSimpleGui
 {
     public partial class main : Form
     {
-
-        private string additionalParamters = "";
+        public List<EXECUTABLE> executables = new List<EXECUTABLE>();
+        private string additionalParameters = "";
 
         public main()
         {
@@ -22,17 +22,18 @@ namespace armipsSimpleGui
             else
             {
                 InitializeComponent();
+                executables = exeConfig.getExecutables();
             }
         }
 
         public void setAdditionalParameters(string str)
         {
-            additionalParamters = str;
+            additionalParameters = str;
         }
 
         public string getAdditionalParameters()
         {
-            return additionalParamters;
+            return additionalParameters;
         }
 
         private void browseROM_Click(object sender, EventArgs e)
@@ -54,7 +55,59 @@ namespace armipsSimpleGui
                 asmTextBox.Text = file.FileName;
             }
         }
-        
+
+        private string parse_exe_arg_variables(string arguments)
+        {
+            arguments = arguments.Replace("${ROM_FILE_PATH}", "\"" + romTextBox.Text + "\"");
+            if (arguments.Contains("${ROM_FILE_SIZE}"))
+                arguments = arguments.Replace("${ROM_FILE_SIZE}", File.ReadAllBytes(romTextBox.Text).Length.ToString());
+            arguments = arguments.Replace("${ASM_FILE_PATH}", "\"" + asmTextBox.Text + "\"");
+            arguments = arguments.Replace("${FILE_RAM_ADDRESS}", "0x" + Settings.fileRAM.ToString("X8"));
+            arguments = arguments.Replace("${ARMIPS_ADDITIONAL_ARGUMENTS}", additionalParameters);
+            return arguments;
+        }
+
+        private bool run_executable(EXECUTABLE exe)
+        {
+            if (exe.Enabled)
+            {
+                if (exe.Name.ToUpper().Equals("ARMIPS"))
+                {
+                    createTempFile("temp.asm", romTextBox.Text);
+
+                    string errorOutput = "";
+                    bool successfulImport = runArmipsImport("temp.asm", ref errorOutput);
+
+                    if (!successfulImport)
+                    {
+                        Form2 form2 = new Form2(errorOutput);
+                        form2.ShowDialog();
+                        return false;
+                    }
+                    
+                    DeleteTempFile("temp.asm");
+                }
+                else
+                {
+                    if (exe.Path.StartsWith("./"))
+                    {
+                        string replace_with = Directory.GetCurrentDirectory().Replace("\\", "/") + "/";
+                        //Console.WriteLine(replace_with);
+                        exe.Path = exe.Path.Replace("./", replace_with);
+                    }
+                    //Console.WriteLine("Running... " + exe.Path);
+                    Process proc = new Process();
+                    proc.StartInfo.FileName = "\"" + exe.Path + "\"";
+                    proc.StartInfo.Arguments = parse_exe_arg_variables(exe.Arguments);
+                    proc.StartInfo.WorkingDirectory = Directory.GetCurrentDirectory();
+                    proc.Start();
+                    proc.WaitForExit();
+                    proc.Close();
+                }
+            }
+            return true;
+        }
+
         private void assemble_Click(object sender, EventArgs e)
         {
 
@@ -64,97 +117,98 @@ namespace armipsSimpleGui
                 return;
             }
 
-            if (!File.Exists(Directory.GetCurrentDirectory() + "/data/n64crc.exe"))
-            {
-                MessageBox.Show("Could not find n64crc.exe! Aborting operation!", "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-                return;
-            }
-
             if (File.Exists(asmTextBox.Text))
             {
                 if (romTextBox.Text.Length > 0)
                 {
                     if (File.Exists(romTextBox.Text))
                     {
-                        string createText = "SAG_FILEPATH equ \"" + romTextBox.Text + "\"" + Environment.NewLine;
-                        createText += "SAG_FILEPOS equ 0x" + Settings.fileRAM.ToString("X") + Environment.NewLine;
-
-                        createText += ".Open SAG_FILEPATH, SAG_FILEPOS" + Environment.NewLine;
-                        if (Settings.preASM.Length > 0)
-                            createText += Settings.preASM + Environment.NewLine;
-                        foreach (string lib in Settings.uselibs)
+                        bool error_occured = false;
+                        foreach (EXECUTABLE exe in executables)
                         {
-                            createText += ".include \""+Directory.GetCurrentDirectory()+"\\data\\libs\\" + 
-                                lib + "\\" + lib + ".asm\"" + Environment.NewLine;
-                        }
-                        if(Settings.postASM.Length > 0)
-                            createText += Settings.postASM + Environment.NewLine;
-                        createText += ".include \"" + asmTextBox.Text + "\"" + Environment.NewLine;
-                        createText += ".Close" + Environment.NewLine;
-                        //Console.WriteLine(createText);
-                        File.WriteAllText("temp.asm", createText);
-
-                        Process p = new Process();
-                        p.StartInfo.FileName = "\"" + Directory.GetCurrentDirectory()+"\\data\\armips.exe\"";
-                        if (Settings.useASMasROOT)
-                        {
-                            p.StartInfo.Arguments +=
-                                "-root \"" + asmTextBox.Text.Substring(0, asmTextBox.Text.LastIndexOf("\\") + 1).Replace("\\","/") + "\" ";
-                        }
-                        p.StartInfo.Arguments += "\"" + Directory.GetCurrentDirectory() + "\\temp.asm\"";
-                        p.StartInfo.Arguments += additionalParamters + " ";
-                        Console.WriteLine(p.StartInfo.Arguments);
-                        p.StartInfo.RedirectStandardOutput = true;
-                        p.StartInfo.UseShellExecute = false;
-                        p.Start();
-                        string q = "";
-                        while (!p.HasExited)
-                        {
-                            q += p.StandardOutput.ReadToEnd();
-                           // Console.WriteLine(q.Length);
+                            error_occured = !run_executable(exe);
+                            if (error_occured)
+                                break;
                         }
 
-                        if (p.ExitCode != 0)
+                        if (Settings.showSuccessMessageBox && !error_occured)
                         {
-                            Form2 form2 = new Form2(q);
-                            form2.ShowDialog();
-                        }
-                        else
-                        {
-                            Process checksum = new Process();
-                            checksum.StartInfo.FileName = Directory.GetCurrentDirectory() + "/data/n64crc.exe";
-                            checksum.StartInfo.Arguments = "\"" + romTextBox.Text + "\"";
-                            checksum.Start();
-                            checksum.WaitForExit();
+                            Focus();
                             MessageBox.Show("File assembled successfully to ROM.", "Done", MessageBoxButtons.OK, MessageBoxIcon.Information);
                         }
-
-                        File.Delete("temp.asm");
                     }
                 }
             }
         }
 
+        public void createTempFile(string tempFile, string IMPORT_TO_FILE)
+        {
+            string createText = "SAG_FILEPATH equ \"" + romTextBox.Text + "\"" + Environment.NewLine;
+            createText += "SAG_FILEPOS equ 0x" + Settings.fileRAM.ToString("X") + Environment.NewLine;
+            createText += "SAG_IMPORTPATH equ \"" + IMPORT_TO_FILE + "\"" + Environment.NewLine;
+
+            createText += ".Open SAG_IMPORTPATH, SAG_FILEPOS" + Environment.NewLine;
+            if (Settings.preASM.Length > 0)
+                createText += Settings.preASM + Environment.NewLine;
+            foreach (string lib in Settings.uselibs)
+            {
+                createText += ".include \"" + Directory.GetCurrentDirectory() + "\\data\\libs\\" +
+                    lib + "\\" + lib + ".asm\"" + Environment.NewLine;
+            }
+            if (Settings.postASM.Length > 0)
+                createText += Settings.postASM + Environment.NewLine;
+            createText += ".include \"" + asmTextBox.Text + "\"" + Environment.NewLine;
+            createText += ".Close" + Environment.NewLine;
+            //Console.WriteLine(createText);
+            File.WriteAllText(tempFile, createText);
+
+        }
+
+        public bool runArmipsImport(string tempFile, ref string errorOutput)
+        {
+            Process p = new Process();
+            p.StartInfo.FileName = "\"" + Directory.GetCurrentDirectory() + "\\data\\armips.exe\"";
+            if (Settings.useASMasROOT)
+            {
+                p.StartInfo.Arguments +=
+                    "-root \"" + asmTextBox.Text.Substring(0, asmTextBox.Text.LastIndexOf("\\") + 1).Replace("\\", "/") + "\" ";
+            }
+            p.StartInfo.Arguments += "\"" + Directory.GetCurrentDirectory() + "\\" + tempFile + "\"";
+            p.StartInfo.Arguments += additionalParameters + " ";
+            //Console.WriteLine(p.StartInfo.Arguments);
+            p.StartInfo.RedirectStandardOutput = true;
+            p.StartInfo.UseShellExecute = false;
+            p.Start();
+            //string q = "";
+            while (!p.HasExited)
+                errorOutput += p.StandardOutput.ReadToEnd();
+            bool ret_value = (p.ExitCode == 0);
+            p.Close();
+            return ret_value;
+        }
+
+        public void DeleteTempFile(string tempFile)
+        {
+            File.Delete(tempFile);
+        }
+
         private void button5_Click(object sender, EventArgs e)
         {
-            string about = "Armips created by Kingcom" + Environment.NewLine;
-            about += "GUI created by davideesk" + Environment.NewLine + Environment.NewLine;
-            about += "Yes, I shamelessly copied Tarek's CajeASM GUI design." + Environment.NewLine;
-            about += "I liked using CajeASM before it died. RIP 2015-2016";
+            string about = "\"Armips\" was created by Kingcom" + Environment.NewLine;
+            about += "\"Simple Armips GUI\" was created by davideesk" + Environment.NewLine + Environment.NewLine;
+            about += "RIP CajeASM 2015-2016" + Environment.NewLine;
             MessageBox.Show(about, "About", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form3 form3 = new Form3(this);
-            form3.ShowDialog();
+            new Form3(this).ShowDialog();
            // Console.WriteLine(additionalParamters);
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form4 form4 = new Form4();
-            form4.ShowDialog();
+            new Form4(this).ShowDialog();
         }
 
         private void main_Load(object sender, EventArgs e)
@@ -165,6 +219,7 @@ namespace armipsSimpleGui
                 List<String> list = new List<String>();
                 list.Add("<fileRAM>00000000</fileRAM>");
                 list.Add("<asmDirIsRoot>True</asmDirIsRoot>");
+                list.Add("<showSuccessBox>True</showSuccessBox>");
                 list.Add("<lib>sm64mlib</lib>");
                 Settings.WriteFileDirectly(Settings.PATH, list);
             }
@@ -172,6 +227,29 @@ namespace armipsSimpleGui
             {
                 Settings.ReadFile(Settings.PATH);
             }
+        }
+
+        private void button1_Click_1(object sender, EventArgs e)
+        {
+            DialogResult dlgResult = MessageBox.Show("The webpage 'https://github.com/Kingcom/armips/blob/master/Readme.md' will now open up on your default browser.", "Armips readme", MessageBoxButtons.OKCancel);
+            if (dlgResult == DialogResult.OK)
+                System.Diagnostics.Process.Start("https://github.com/Kingcom/armips/blob/master/Readme.md");
+        }
+
+        private void xmlTweakButton_Click(object sender, EventArgs e)
+        {
+            if (romTextBox.Text.Equals(""))
+            {
+                MessageBox.Show("You need to have a ROM file set!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            if (asmTextBox.Text.Equals(""))
+            {
+                MessageBox.Show("You need to have an ASM file set!", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                return;
+            }
+            Form7 form7 = new Form7(romTextBox.Text, asmTextBox.Text, this);
+            form7.ShowDialog();
         }
     }
 }

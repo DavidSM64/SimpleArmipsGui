@@ -43,6 +43,7 @@
             this.useASMasRootDir = new System.Windows.Forms.CheckBox();
             this.button5 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.showSuccessBox_CB = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
             // label1
@@ -169,7 +170,7 @@
             this.useASMasRootDir.AutoSize = true;
             this.useASMasRootDir.Checked = true;
             this.useASMasRootDir.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.useASMasRootDir.Location = new System.Drawing.Point(258, 38);
+            this.useASMasRootDir.Location = new System.Drawing.Point(239, 34);
             this.useASMasRootDir.Name = "useASMasRootDir";
             this.useASMasRootDir.Size = new System.Drawing.Size(194, 17);
             this.useASMasRootDir.TabIndex = 11;
@@ -178,7 +179,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(249, 5);
+            this.button5.Location = new System.Drawing.Point(234, 5);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(104, 23);
             this.button5.TabIndex = 12;
@@ -188,19 +189,32 @@
             // 
             // button6
             // 
-            this.button6.Location = new System.Drawing.Point(359, 5);
+            this.button6.Location = new System.Drawing.Point(342, 5);
             this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(101, 23);
+            this.button6.Size = new System.Drawing.Size(118, 23);
             this.button6.TabIndex = 13;
-            this.button6.Text = "Armips Readme";
+            this.button6.Text = "Manage executables";
             this.button6.UseVisualStyleBackColor = true;
             this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
+            // showSuccessBox_CB
+            // 
+            this.showSuccessBox_CB.AutoSize = true;
+            this.showSuccessBox_CB.Checked = true;
+            this.showSuccessBox_CB.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.showSuccessBox_CB.Location = new System.Drawing.Point(239, 53);
+            this.showSuccessBox_CB.Name = "showSuccessBox_CB";
+            this.showSuccessBox_CB.Size = new System.Drawing.Size(213, 17);
+            this.showSuccessBox_CB.TabIndex = 14;
+            this.showSuccessBox_CB.Text = "Show message on successful assemble";
+            this.showSuccessBox_CB.UseVisualStyleBackColor = true;
             // 
             // Form4
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(464, 208);
+            this.Controls.Add(this.showSuccessBox_CB);
             this.Controls.Add(this.button6);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.useASMasRootDir);
@@ -242,5 +256,6 @@
         private System.Windows.Forms.CheckBox useASMasRootDir;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.CheckBox showSuccessBox_CB;
     }
 }

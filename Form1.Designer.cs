@@ -39,13 +39,17 @@
             this.button4 = new System.Windows.Forms.Button();
             this.button5 = new System.Windows.Forms.Button();
             this.settingsButton = new System.Windows.Forms.Button();
+            this.xmlTweakButton = new System.Windows.Forms.Button();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.button1 = new System.Windows.Forms.Button();
+            this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
             // label1
             // 
             this.label1.AutoSize = true;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(32, 19);
+            this.label1.Location = new System.Drawing.Point(31, 40);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(39, 15);
             this.label1.TabIndex = 0;
@@ -55,7 +59,7 @@
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label2.Location = new System.Drawing.Point(12, 60);
+            this.label2.Location = new System.Drawing.Point(11, 81);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(59, 15);
             this.label2.TabIndex = 1;
@@ -63,7 +67,7 @@
             // 
             // asmTextBox
             // 
-            this.asmTextBox.Location = new System.Drawing.Point(77, 59);
+            this.asmTextBox.Location = new System.Drawing.Point(77, 80);
             this.asmTextBox.Name = "asmTextBox";
             this.asmTextBox.ReadOnly = true;
             this.asmTextBox.Size = new System.Drawing.Size(314, 20);
@@ -72,7 +76,7 @@
             // 
             // browseASM
             // 
-            this.browseASM.Location = new System.Drawing.Point(401, 54);
+            this.browseASM.Location = new System.Drawing.Point(400, 75);
             this.browseASM.Name = "browseASM";
             this.browseASM.Size = new System.Drawing.Size(110, 32);
             this.browseASM.TabIndex = 3;
@@ -83,7 +87,7 @@
             // 
             // browseROM
             // 
-            this.browseROM.Location = new System.Drawing.Point(401, 13);
+            this.browseROM.Location = new System.Drawing.Point(400, 34);
             this.browseROM.Name = "browseROM";
             this.browseROM.Size = new System.Drawing.Size(110, 32);
             this.browseROM.TabIndex = 4;
@@ -94,7 +98,7 @@
             // 
             // romTextBox
             // 
-            this.romTextBox.Location = new System.Drawing.Point(77, 19);
+            this.romTextBox.Location = new System.Drawing.Point(77, 40);
             this.romTextBox.Name = "romTextBox";
             this.romTextBox.ReadOnly = true;
             this.romTextBox.Size = new System.Drawing.Size(314, 20);
@@ -103,7 +107,7 @@
             // 
             // assemble
             // 
-            this.assemble.Location = new System.Drawing.Point(77, 99);
+            this.assemble.Location = new System.Drawing.Point(77, 117);
             this.assemble.Name = "assemble";
             this.assemble.Size = new System.Drawing.Size(314, 40);
             this.assemble.TabIndex = 6;
@@ -114,7 +118,7 @@
             // 
             // button4
             // 
-            this.button4.Location = new System.Drawing.Point(401, 99);
+            this.button4.Location = new System.Drawing.Point(400, 117);
             this.button4.Name = "button4";
             this.button4.Size = new System.Drawing.Size(110, 40);
             this.button4.TabIndex = 7;
@@ -125,7 +129,7 @@
             // 
             // button5
             // 
-            this.button5.Location = new System.Drawing.Point(12, 99);
+            this.button5.Location = new System.Drawing.Point(11, 117);
             this.button5.Name = "button5";
             this.button5.Size = new System.Drawing.Size(59, 40);
             this.button5.TabIndex = 8;
@@ -138,7 +142,7 @@
             // 
             this.settingsButton.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("settingsButton.BackgroundImage")));
             this.settingsButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.settingsButton.Location = new System.Drawing.Point(3, 3);
+            this.settingsButton.Location = new System.Drawing.Point(3, 2);
             this.settingsButton.Name = "settingsButton";
             this.settingsButton.Size = new System.Drawing.Size(20, 20);
             this.settingsButton.TabIndex = 9;
@@ -146,13 +150,54 @@
             this.settingsButton.UseVisualStyleBackColor = true;
             this.settingsButton.Click += new System.EventHandler(this.button1_Click);
             // 
+            // xmlTweakButton
+            // 
+            this.xmlTweakButton.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.xmlTweakButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.xmlTweakButton.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.xmlTweakButton.ForeColor = System.Drawing.Color.Black;
+            this.xmlTweakButton.Location = new System.Drawing.Point(25, 2);
+            this.xmlTweakButton.Name = "xmlTweakButton";
+            this.xmlTweakButton.Size = new System.Drawing.Size(45, 20);
+            this.xmlTweakButton.TabIndex = 10;
+            this.xmlTweakButton.TabStop = false;
+            this.xmlTweakButton.Text = "<XML>";
+            this.xmlTweakButton.UseVisualStyleBackColor = true;
+            this.xmlTweakButton.Click += new System.EventHandler(this.xmlTweakButton_Click);
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.settingsButton);
+            this.panel1.Controls.Add(this.xmlTweakButton);
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(519, 24);
+            this.panel1.TabIndex = 11;
+            // 
+            // button1
+            // 
+            this.button1.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
+            this.button1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.button1.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.button1.ForeColor = System.Drawing.Color.Black;
+            this.button1.Location = new System.Drawing.Point(72, 2);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(93, 20);
+            this.button1.TabIndex = 11;
+            this.button1.TabStop = false;
+            this.button1.Text = "Armips Readme";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click_1);
+            // 
             // main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.ClientSize = new System.Drawing.Size(519, 149);
-            this.Controls.Add(this.settingsButton);
+            this.ClientSize = new System.Drawing.Size(519, 167);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.button5);
             this.Controls.Add(this.button4);
             this.Controls.Add(this.assemble);
@@ -167,8 +212,9 @@
             this.MaximizeBox = false;
             this.Name = "main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Simple Armips GUI v1.0.3";
+            this.Text = "Simple Armips GUI v1.2";
             this.Load += new System.EventHandler(this.main_Load);
+            this.panel1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,6 +232,9 @@
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button settingsButton;
+        private System.Windows.Forms.Button xmlTweakButton;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Button button1;
     }
 }
 

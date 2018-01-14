@@ -12,9 +12,11 @@ namespace armipsSimpleGui
 {
     public partial class Form4 : Form
     {
-        public Form4()
+        private main m;
+        public Form4(main m)
         {
             InitializeComponent();
+            this.m = m;
         }
 
         private void Form4_Load(object sender, EventArgs e)
@@ -23,6 +25,7 @@ namespace armipsSimpleGui
             libs.AutoResizeColumns(ColumnHeaderAutoResizeStyle.HeaderSize);
             fileRamBox.Text = Settings.fileRAM.ToString("X");
             useASMasRootDir.Checked = Settings.useASMasROOT;
+            showSuccessBox_CB.Checked = Settings.showSuccessMessageBox;
 
             Settings.loadPrePostASM();
 
@@ -82,6 +85,7 @@ namespace armipsSimpleGui
                     System.Globalization.NumberStyles.HexNumber,
                     null, out Settings.fileRAM);
             Settings.useASMasROOT = useASMasRootDir.Checked;
+            Settings.showSuccessMessageBox = showSuccessBox_CB.Checked;
             Settings.uselibs.Clear();
             foreach (ListViewItem item in libs.Items) {
                 if(item.Checked)
@@ -111,14 +115,12 @@ namespace armipsSimpleGui
 
         private void button1_Click(object sender, EventArgs e)
         {
-            Form5 form5 = new Form5();
-            form5.ShowDialog();
+            new Form5().ShowDialog();
         }
 
         private void button4_Click(object sender, EventArgs e)
         {
-            Form6 form6 = new Form6();
-            form6.ShowDialog();
+            new Form6().ShowDialog();
         }
 
         private void downBut_Click(object sender, EventArgs e)
@@ -173,11 +175,7 @@ namespace armipsSimpleGui
 
         private void button6_Click(object sender, EventArgs e)
         {
-
-            DialogResult dlgResult = MessageBox.Show("The webpage 'https://github.com/Kingcom/armips/blob/master/Readme.md' will now open up on your default browser.", "Armips readme", MessageBoxButtons.OKCancel);
-            if (dlgResult == DialogResult.OK)
-                System.Diagnostics.Process.Start("https://github.com/Kingcom/armips/blob/master/Readme.md");
-            
+            new Form8(m).ShowDialog();
         }
     }
 }

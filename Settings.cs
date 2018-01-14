@@ -9,13 +9,13 @@ namespace armipsSimpleGui
 {
     class Settings
     {
-        public const string GUI_VERSION = "1.0";
         public const string PATH = "data\\settings.xml";
         public static uint fileRAM = 0;
         public static List<String> uselibs = new List<String>();
         public static string preASM = "";
         public static string postASM = "";
         public static bool useASMasROOT = true;
+        public static bool showSuccessMessageBox = true;
 
         public static void saveString(string text, string path) {
             File.WriteAllText(path, text);
@@ -57,6 +57,10 @@ namespace armipsSimpleGui
                 {
                     bool.TryParse(child.InnerText, out useASMasROOT);
                 }
+                else if (child.Name.Equals("showSuccessBox"))
+                {
+                    bool.TryParse(child.InnerText, out showSuccessMessageBox);
+                }
             }
 
         }
@@ -66,6 +70,7 @@ namespace armipsSimpleGui
             List<String> list = new List<String>();
             list.Add("<fileRAM>" + fileRAM.ToString("X") + "</fileRAM>");
             list.Add("<asmDirIsRoot>" + useASMasROOT.ToString() + "</asmDirIsRoot>");
+            list.Add("<showSuccessBox>" + showSuccessMessageBox.ToString() + "</showSuccessBox>");
 
             foreach (String s in uselibs)
             {
