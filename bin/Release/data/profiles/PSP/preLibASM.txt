@@ -1,0 +1,4 @@
+// This code will run BEFORE the libraries have loaded.
+
+// Set armips to PSP mode
+.psp

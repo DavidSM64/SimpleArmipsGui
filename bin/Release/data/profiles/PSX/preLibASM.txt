@@ -1,0 +1,4 @@
+// This code will run BEFORE the libraries have loaded.
+
+// Set armips to Playstation 1 mode
+.psx

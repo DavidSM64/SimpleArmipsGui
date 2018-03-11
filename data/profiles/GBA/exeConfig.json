@@ -1,0 +1,10 @@
+{
+  "executables": [
+    {
+      "Name": "Armips",
+      "Path": "",
+      "Arguments": "",
+      "Enabled": true
+    }
+  ]
+}

@@ -29,7 +29,7 @@ namespace armipsSimpleGui
 
             Settings.loadPrePostASM();
 
-            string libsPath = Directory.GetCurrentDirectory() + "\\data\\libs";
+            string libsPath = main.getActiveProfilePath() + "libs";
             
             if (Directory.Exists(libsPath))
             {
@@ -51,6 +51,7 @@ namespace armipsSimpleGui
             {
                 MessageBox.Show("Error: Could not find libs folder!", "Error", 
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Directory.CreateDirectory(libsPath);
             }
 
             // Remove checked items (for sorting)

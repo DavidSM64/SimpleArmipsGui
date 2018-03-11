@@ -41,6 +41,8 @@
             this.settingsButton = new System.Windows.Forms.Button();
             this.xmlTweakButton = new System.Windows.Forms.Button();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.comboSelectProfile_label = new System.Windows.Forms.Label();
+            this.comboSelectProfile = new System.Windows.Forms.ComboBox();
             this.button1 = new System.Windows.Forms.Button();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
@@ -168,6 +170,8 @@
             // panel1
             // 
             this.panel1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            this.panel1.Controls.Add(this.comboSelectProfile_label);
+            this.panel1.Controls.Add(this.comboSelectProfile);
             this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.settingsButton);
             this.panel1.Controls.Add(this.xmlTweakButton);
@@ -175,6 +179,33 @@
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(519, 24);
             this.panel1.TabIndex = 11;
+            // 
+            // comboSelectProfile_label
+            // 
+            this.comboSelectProfile_label.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboSelectProfile_label.AutoSize = true;
+            this.comboSelectProfile_label.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboSelectProfile_label.Location = new System.Drawing.Point(416, 6);
+            this.comboSelectProfile_label.Name = "comboSelectProfile_label";
+            this.comboSelectProfile_label.Size = new System.Drawing.Size(55, 13);
+            this.comboSelectProfile_label.TabIndex = 13;
+            this.comboSelectProfile_label.Text = "Profile:";
+            // 
+            // comboSelectProfile
+            // 
+            this.comboSelectProfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.comboSelectProfile.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.comboSelectProfile.Font = new System.Drawing.Font("Consolas", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.comboSelectProfile.FormattingEnabled = true;
+            this.comboSelectProfile.ItemHeight = 13;
+            this.comboSelectProfile.Location = new System.Drawing.Point(472, 1);
+            this.comboSelectProfile.MaxDropDownItems = 10;
+            this.comboSelectProfile.Name = "comboSelectProfile";
+            this.comboSelectProfile.Size = new System.Drawing.Size(46, 21);
+            this.comboSelectProfile.TabIndex = 12;
+            this.comboSelectProfile.TabStop = false;
+            this.comboSelectProfile.DropDown += new System.EventHandler(this.comboSelectProfile_DropDown);
+            this.comboSelectProfile.DropDownClosed += new System.EventHandler(this.comboSelectProfile_DropDownClosed);
             // 
             // button1
             // 
@@ -212,9 +243,10 @@
             this.MaximizeBox = false;
             this.Name = "main";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Simple Armips GUI v1.2";
+            this.Text = "Simple Armips GUI v1.3";
             this.Load += new System.EventHandler(this.main_Load);
             this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -235,6 +267,8 @@
         private System.Windows.Forms.Button xmlTweakButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.ComboBox comboSelectProfile;
+        private System.Windows.Forms.Label comboSelectProfile_label;
     }
 }
 

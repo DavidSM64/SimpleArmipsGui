@@ -16,14 +16,25 @@ namespace armipsSimpleGui
     }
     class exeConfig
     {
-        private const string jsonFile = "./data/exeConfig.json";
+        private static string getJsonFilePath()
+        {
+            return main.getActiveProfilePath() + "exeConfig.json";
+        }
 
         public static List<EXECUTABLE> getExecutables()
         {
             List<EXECUTABLE> exes = new List<EXECUTABLE>();
 
+            string jsonFile = getJsonFilePath();
+
             if (!File.Exists(jsonFile))
-                return null;
+            {
+                EXECUTABLE exe = new EXECUTABLE();
+                exe.Name = "Armips";
+                exe.Enabled = true;
+                exes.Add(exe);
+                return exes;
+            }
             
             JArray jarray = (JArray)JObject.Parse(File.ReadAllText(jsonFile))["executables"];
 
@@ -63,7 +74,7 @@ namespace armipsSimpleGui
                  )
              );
 
-            File.WriteAllText(jsonFile, o.ToString());
+            File.WriteAllText(getJsonFilePath(), o.ToString());
         }
     }
 }

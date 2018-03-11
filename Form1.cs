@@ -3,6 +3,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Windows.Forms;
 using System.Diagnostics;
+using System.Drawing;
 
 namespace armipsSimpleGui
 {
@@ -10,7 +11,10 @@ namespace armipsSimpleGui
     {
         public List<EXECUTABLE> executables = new List<EXECUTABLE>();
         private string additionalParameters = "";
-
+        private string longest_profile_text = "";
+        private static string path_to_profiles = Directory.GetCurrentDirectory() + "/data/profiles/";
+        private static string current_profile = "";
+        
         public main()
         {
             if (!Directory.Exists(Directory.GetCurrentDirectory() + "\\data"))
@@ -22,8 +26,20 @@ namespace armipsSimpleGui
             else
             {
                 InitializeComponent();
+                loadUserProfiles();
+                loadAdditionalParameters();
                 executables = exeConfig.getExecutables();
             }
+        }
+
+        public static string getActiveProfileName()
+        {
+            return current_profile;
+        }
+
+        public static string getActiveProfilePath()
+        {
+            return path_to_profiles + current_profile + "\\";
         }
 
         public void setAdditionalParameters(string str)
@@ -34,6 +50,71 @@ namespace armipsSimpleGui
         public string getAdditionalParameters()
         {
             return additionalParameters;
+        }
+
+        private void loadAdditionalParameters()
+        {
+            string aafile = getActiveProfilePath() + "AdditionalArguments.txt";
+            if (File.Exists(aafile))
+                additionalParameters = File.ReadAllText(aafile);
+            else
+                File.WriteAllText(aafile, "");
+        }
+
+        private void loadUserProfiles()
+        {
+            foreach (string profilePath in Directory.GetDirectories(path_to_profiles))
+            {
+                string profileName = profilePath.Remove(0, path_to_profiles.Length);
+                comboSelectProfile.Items.Add(profileName);
+                if (longest_profile_text.Length < profileName.Length)
+                    longest_profile_text = profileName;
+            }
+
+            try
+            {
+                string lastProfile = File.ReadAllText(path_to_profiles + "lastProfile.txt");
+                comboSelectProfile.SelectedItem = lastProfile;
+            }
+            catch (IOException e)
+            {
+                comboSelectProfile.SelectedIndex = 0;
+                File.WriteAllText(path_to_profiles + "lastProfile.txt", "N64");
+            }
+            
+            current_profile = (string)comboSelectProfile.SelectedItem;
+            updateProfileComboBoxLength((string)comboSelectProfile.SelectedItem);
+        }
+
+        private void updateProfileComboBoxLength(string text)
+        {
+            comboSelectProfile.Width = 20 + TextRenderer.MeasureText(text, comboSelectProfile.Font).Width;
+            comboSelectProfile.Location = 
+                new Point((Width - 8) - comboSelectProfile.Width, comboSelectProfile.Location.Y);
+            comboSelectProfile_label.Location =
+                new Point((Width - 8) - comboSelectProfile.Width - comboSelectProfile_label.Width, comboSelectProfile_label.Location.Y);
+        }
+        
+        private void comboSelectProfile_DropDown(object sender, EventArgs e)
+        {
+            updateProfileComboBoxLength(longest_profile_text);
+        }
+
+        private void comboSelectProfile_DropDownClosed(object sender, EventArgs e)
+        {
+            updateProfileComboBoxLength((string)comboSelectProfile.SelectedItem);
+            File.WriteAllText(path_to_profiles + "lastProfile.txt", (string)comboSelectProfile.SelectedItem);
+            current_profile = (string)comboSelectProfile.SelectedItem;
+            executables = exeConfig.getExecutables();
+            loadAdditionalParameters();
+            changeProfileSettings();
+        }
+
+        private void changeProfileSettings()
+        {
+            Settings.clearSettings();
+            Settings.ReadFile(getActiveProfilePath() + Settings.SETTINGS_FILENAME);
+            Settings.loadPrePostASM();
         }
 
         private void browseROM_Click(object sender, EventArgs e)
@@ -85,7 +166,7 @@ namespace armipsSimpleGui
                         return false;
                     }
                     
-                    DeleteTempFile("temp.asm");
+                   // DeleteTempFile("temp.asm");
                 }
                 else
                 {
@@ -152,7 +233,7 @@ namespace armipsSimpleGui
                 createText += Settings.preASM + Environment.NewLine;
             foreach (string lib in Settings.uselibs)
             {
-                createText += ".include \"" + Directory.GetCurrentDirectory() + "\\data\\libs\\" +
+                createText += ".include \"" + getActiveProfilePath() + "libs\\" +
                     lib + "\\" + lib + ".asm\"" + Environment.NewLine;
             }
             if (Settings.postASM.Length > 0)
@@ -214,18 +295,17 @@ namespace armipsSimpleGui
         private void main_Load(object sender, EventArgs e)
         {
             Settings.loadPrePostASM();
-            if (!File.Exists(Settings.PATH))
+            if (!File.Exists(getActiveProfilePath() + Settings.SETTINGS_FILENAME))
             {
                 List<String> list = new List<String>();
                 list.Add("<fileRAM>00000000</fileRAM>");
                 list.Add("<asmDirIsRoot>True</asmDirIsRoot>");
                 list.Add("<showSuccessBox>True</showSuccessBox>");
-                list.Add("<lib>sm64mlib</lib>");
-                Settings.WriteFileDirectly(Settings.PATH, list);
+                Settings.WriteFileDirectly(getActiveProfilePath() + Settings.SETTINGS_FILENAME, list);
             }
             else
             {
-                Settings.ReadFile(Settings.PATH);
+                Settings.ReadFile(getActiveProfilePath()+Settings.SETTINGS_FILENAME);
             }
         }
 

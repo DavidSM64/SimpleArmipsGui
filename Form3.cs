@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Forms;
 
 namespace armipsSimpleGui
@@ -17,6 +18,7 @@ namespace armipsSimpleGui
         private void okBut_Click(object sender, EventArgs e)
         {
             form.setAdditionalParameters(addParams.Text);
+            File.WriteAllText(main.getActiveProfilePath() + "AdditionalArguments.txt", addParams.Text);
             Close();
         }
 

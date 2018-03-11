@@ -1,0 +1,16 @@
+﻿{
+	"executables" : [
+		{
+			"Name" : "Armips",
+			"Path" : "",
+			"Arguments" : "",
+			"Enabled" : true
+		},
+		{
+			"Name" : "n64crc.exe",
+			"Path" : "./data/n64crc.exe",
+			"Arguments" : "${ROM_FILE_PATH}",
+			"Enabled" : true
+		}
+	]
+}

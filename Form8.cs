@@ -228,7 +228,10 @@ namespace armipsSimpleGui
             {
                 EXECUTABLE exe = new EXECUTABLE();
                 exe.Name = panel_boxes.Controls[i].Controls[0].Text;
-                exe.Path = panel_boxes.Controls[i].Controls[0].Tag.ToString();
+                if (panel_boxes.Controls[i].Controls[0].Tag != null)
+                    exe.Path = panel_boxes.Controls[i].Controls[0].Tag.ToString();
+                else
+                    exe.Path = "";
                 exe.Arguments = panel_boxes.Controls[i].Controls[3].Text;
                 exe.Enabled = ((CheckBox)panel_boxes.Controls[i].Controls[6]).Checked;
 

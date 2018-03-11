@@ -9,7 +9,7 @@ namespace armipsSimpleGui
 {
     class Settings
     {
-        public const string PATH = "data\\settings.xml";
+        public const string SETTINGS_FILENAME = "settings.xml";
         public static uint fileRAM = 0;
         public static List<String> uselibs = new List<String>();
         public static string preASM = "";
@@ -76,9 +76,9 @@ namespace armipsSimpleGui
             {
                 list.Add("<lib>" + s + "</lib>");
             }
-            WriteFileDirectly(PATH, list);
-            saveString(preASM, Directory.GetCurrentDirectory() + "\\data\\preLibASM.txt");
-            saveString(postASM, Directory.GetCurrentDirectory() + "\\data\\postLibASM.txt");
+            WriteFileDirectly(main.getActiveProfilePath() + SETTINGS_FILENAME, list);
+            saveString(preASM, main.getActiveProfilePath() + "preLibASM.txt");
+            saveString(postASM, main.getActiveProfilePath() + "postLibASM.txt");
         }
 
         public static void WriteFileDirectly(string path, List<String> list)
@@ -100,27 +100,25 @@ namespace armipsSimpleGui
         }
 
         public static void loadPrePostASM() {
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\data\\preLibASM.txt"))
+            if (File.Exists(main.getActiveProfilePath() + "preLibASM.txt"))
             {
-                preASM = loadString(Directory.GetCurrentDirectory() + "\\data\\preLibASM.txt");
+                preASM = loadString(main.getActiveProfilePath() + "preLibASM.txt");
             }
             else
             {
                 preASM = "// This code will run BEFORE the libraries have loaded." + Environment.NewLine + 
-                Environment.NewLine + 
-                "// Set armips to N64 mode" + Environment.NewLine + 
-                ".n64" + Environment.NewLine;
-                saveString(preASM, Directory.GetCurrentDirectory() + "\\data\\preLibASM.txt");
+                Environment.NewLine;
+                saveString(preASM, main.getActiveProfilePath() + "preLibASM.txt");
             }
 
-            if (File.Exists(Directory.GetCurrentDirectory() + "\\data\\postLibASM.txt"))
+            if (File.Exists(main.getActiveProfilePath() + "postLibASM.txt"))
             {
-                postASM = loadString(Directory.GetCurrentDirectory() + "\\data\\postLibASM.txt");
+                postASM = loadString(main.getActiveProfilePath() + "postLibASM.txt");
             }
             else
             {
                 postASM = "// This code will run AFTER the libraries have loaded.";
-                saveString(postASM, Directory.GetCurrentDirectory() + "\\data\\postLibASM.txt");
+                saveString(postASM, main.getActiveProfilePath() + "postLibASM.txt");
             }
         }
     }
