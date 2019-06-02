@@ -166,7 +166,7 @@ namespace armipsSimpleGui
                         return false;
                     }
                     
-                   // DeleteTempFile("temp.asm");
+                    DeleteTempFile("temp.asm");
                 }
                 else
                 {
@@ -254,13 +254,11 @@ namespace armipsSimpleGui
                 p.StartInfo.Arguments +=
                     "-root \"" + asmTextBox.Text.Substring(0, asmTextBox.Text.LastIndexOf("\\") + 1).Replace("\\", "/") + "\" ";
             }
-            p.StartInfo.Arguments += "\"" + Directory.GetCurrentDirectory() + "\\" + tempFile + "\"";
-            p.StartInfo.Arguments += additionalParameters + " ";
-            //Console.WriteLine(p.StartInfo.Arguments);
+            p.StartInfo.Arguments += "\"" + Directory.GetCurrentDirectory() + "\\" + tempFile + "\" ";
+            p.StartInfo.Arguments += additionalParameters;
             p.StartInfo.RedirectStandardOutput = true;
             p.StartInfo.UseShellExecute = false;
             p.Start();
-            //string q = "";
             while (!p.HasExited)
                 errorOutput += p.StandardOutput.ReadToEnd();
             bool ret_value = (p.ExitCode == 0);
