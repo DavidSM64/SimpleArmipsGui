@@ -45,3 +45,76 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+.vs/armipsSimpleGui/v16/.suo
+.vs/armipsSimpleGui/v16/Server/sqlite3/db.lock
+.vs/armipsSimpleGui/v16/Server/sqlite3/storage.ide
+.vs/armipsSimpleGui/v16/Server/sqlite3/storage.ide-shm
+.vs/armipsSimpleGui/v16/Server/sqlite3/storage.ide-wal
+obj/Debug/armipsSimpleGui.csproj.CopyComplete
+obj/Debug/armipsSimpleGui.csproj.CoreCompileInputs.cache
+obj/Debug/armipsSimpleGui.csproj.FileListAbsolute.txt
+obj/Debug/armipsSimpleGui.csproj.GenerateResource.cache
+obj/Debug/armipsSimpleGui.csprojAssemblyReference.cache
+obj/Debug/armipsSimpleGui.Form2.resources
+obj/Debug/armipsSimpleGui.Form3.resources
+obj/Debug/armipsSimpleGui.Form4.resources
+obj/Debug/armipsSimpleGui.Form5.resources
+obj/Debug/armipsSimpleGui.Form6.resources
+obj/Debug/armipsSimpleGui.Form7.resources
+obj/Debug/armipsSimpleGui.Form8.resources
+obj/Debug/armipsSimpleGui.Form9.resources
+obj/Debug/armipsSimpleGui.main.resources
+obj/Debug/armipsSimpleGui.Properties.Resources.resources
+obj/Debug/AssemblyReference.cache
+obj/Debug/DesignTimeResolveAssemblyReferences.cache
+obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache
+obj/Debug/Simple Armips GUI.exe
+obj/Debug/Simple Armips GUI.pdb
+obj/Debug/TempPE/Properties.Resources.Designer.cs.dll
+obj/Release/armipsSimpleGui.csproj.CopyComplete
+obj/Release/armipsSimpleGui.csproj.CoreCompileInputs.cache
+obj/Release/armipsSimpleGui.csproj.FileListAbsolute.txt
+obj/Release/armipsSimpleGui.csproj.GenerateResource.cache
+obj/Release/armipsSimpleGui.Form2.resources
+obj/Release/armipsSimpleGui.Form3.resources
+obj/Release/armipsSimpleGui.Form4.resources
+obj/Release/armipsSimpleGui.Form5.resources
+obj/Release/armipsSimpleGui.Form6.resources
+obj/Release/armipsSimpleGui.Form7.resources
+obj/Release/armipsSimpleGui.Form8.resources
+obj/Release/armipsSimpleGui.Form9.resources
+obj/Release/armipsSimpleGui.main.resources
+obj/Release/armipsSimpleGui.Properties.Resources.resources
+obj/Release/DesignTimeResolveAssemblyReferencesInput.cache
+obj/Release/Simple Armips GUI.exe
+obj/Release/Simple Armips GUI.pdb
+obj/Release/TempPE/Properties.Resources.Designer.cs.dll
+packages/Newtonsoft.Json.12.0.2/.signature.p7s
+packages/Newtonsoft.Json.12.0.2/lib/net20/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/net20/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/net35/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/net35/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/net40/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/net40/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/net45/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/net45/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/netstandard1.0/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/netstandard1.0/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/netstandard1.3/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/netstandard1.3/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/netstandard2.0/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/netstandard2.0/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/portable-net40+sl5+win8+wp8+wpa81/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.dll
+packages/Newtonsoft.Json.12.0.2/lib/portable-net45+win8+wp8+wpa81/Newtonsoft.Json.xml
+packages/Newtonsoft.Json.12.0.2/LICENSE.md
+packages/Newtonsoft.Json.12.0.2/Newtonsoft.Json.12.0.2.nupkg
+packages/SevenZip.19.0.0/.signature.p7s
+packages/SevenZip.19.0.0/lib/net20/SevenZip.dll
+packages/SevenZip.19.0.0/lib/netstandard2.0/SevenZip.dll
+packages/SevenZip.19.0.0/pack-package.cmd
+packages/SevenZip.19.0.0/publish-package.cmd
+packages/SevenZip.19.0.0/SevenZip.19.0.0.nupkg
+packages/SevenZipSharp.0.64/lib/SevenZipSharp.dll
+packages/SevenZipSharp.0.64/SevenZipSharp.0.64.nupkg
